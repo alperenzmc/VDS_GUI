@@ -1,6 +1,5 @@
 #include "udpserver.h"
 
-
 /*!
  * \brief UdpServer::UdpServer
  * \param parent
@@ -15,8 +14,8 @@ UdpServer::UdpServer(QObject *parent)
 void UdpServer::run(){
     this->socket = new QUdpSocket(this);
     //socket->bind(QHostAddress("192.168.0.3"),1234);
+    sleep(1);
     this->socket->bind(QHostAddress("127.0.0.1"),1235);
-    connect(this->socket,SIGNAL(readyRead()),this,SLOT(readReady()));
 }
 
 
@@ -25,38 +24,43 @@ void UdpServer::run(){
  * \param DataQByte
  * \param data
  */
-void qbyteToDoublee(QByteArray DataQByte, Configuration data)
+void UdpServer::sendData() // Call with VDP *;
 {
+    this->socket = new QUdpSocket(this);
 
-    QStringList data_list = QString(DataQByte).split(' ');
+    qDebug() << "Starting...";
 
-    data.set_latitude(data_list[0].toDouble());
-    data.set_longitude(data_list[1].toDouble());
-    data.set_velocity(data_list[2].toDouble());
-    data.set_acceleration(data_list[3].toDouble());
-    qDebug()  << "Data (double): " << data.get_latitude() <<data.get_longitude() << data.get_velocity() << data.get_acceleration();
+    QString latittude = QString::number(data.get_latitude());//vdp.blabla
+
+    QString longitude = QString::number(data.get_longitude());
+
+    QString velocity = QString::number(data.get_velocity());
+
+    QString acceleration = QString::number(data.get_acceleration());
+
+    QByteArray qbyte_data {latittude.toUtf8()};
+    qbyte_data.append(" " + longitude.toUtf8() + " " + velocity.toUtf8() + " " + acceleration.toUtf8());
+
+    socket->writeDatagram(qbyte_data,QHostAddress("127.0.0.1"),1235);
+    qDebug() << "Sent data:" << qbyte_data;
 }
 
 
 /*!
  * \brief UdpServer::readReady
  */
-void UdpServer::readReady()
+void UdpServer::setData(Configuration data_values)
 {
-
-    QByteArray Buffer;
-    Buffer.resize(this->socket->pendingDatagramSize());
-
-    QHostAddress sender;
-
-    quint16 senderPort;
-    this->socket->readDatagram(Buffer.data(),Buffer.size(),&sender, &senderPort);
-
-    qDebug() << "Data from:" << sender.toString();
-    qDebug() << "Data Port:" << senderPort;
-    qDebug() << "Data:" << Buffer;
-
-    qbyteToDoublee(Buffer, data);
-
-
+    this->data = data_values;
 }
+
+/*!
+ * \brief UdpClient::getData
+ * \return
+ */
+Configuration UdpServer::getData()
+{
+    return this->data;
+}
+
+

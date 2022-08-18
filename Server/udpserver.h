@@ -5,6 +5,8 @@
 #include <QUdpSocket>
 #include"VDP_Simulator/configuration.h"
 #include "mythread.h"
+#include <unistd.h>
+
 
 
 /*!
@@ -16,14 +18,20 @@ class UdpServer : public QObject
 public:
 
     explicit UdpServer(QObject *parent = nullptr);
-    Configuration data;
+
     void run();
+    void sendData();
+    void setData(Configuration data_values);
+    Configuration getData();
 signals:
 
 public slots:
-    void readReady();
+
 private:
-     QUdpSocket* socket;
+
+     QUdpSocket *socket;
+     Configuration data;
+
 
 };
 

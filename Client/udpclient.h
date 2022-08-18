@@ -10,20 +10,19 @@ class UdpClient : public QObject
     Q_OBJECT
 public:
     explicit UdpClient(QObject *parent = nullptr);
-    void sendData();
-    void setData(Configuration data_values);
-    Configuration getData();
+    Configuration data;
 signals:
 
 public slots:
+    void readReady();
+
 
 
 /*!
 * \brief socket
 */
 private:
-    QUdpSocket *socket;
-    Configuration data;
+  QUdpSocket* socket;
 };
 
 

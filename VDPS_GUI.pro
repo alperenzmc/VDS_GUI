@@ -24,7 +24,6 @@ SOURCES += \
     Server/udpserver.cpp \
     VDP_Simulator/configuration.cpp \
     VDP_Simulator/mainwindow.cpp \
-    VDP_Simulator/visualizevdp.cpp \
     main.cpp \
     yaml/src/binary.cpp \
     yaml/src/contrib/graphbuilder.cpp \
@@ -69,7 +68,7 @@ HEADERS += \
     Server/udpserver.h \
     VDP_Simulator/configuration.h \
     VDP_Simulator/mainwindow.h \
-    VDP_Simulator/visualizevdp.h \ \ \
+  \ \
     yaml/include/yaml-cpp/anchor.h \
     yaml/include/yaml-cpp/binary.h \
     yaml/include/yaml-cpp/contrib/anchordict.h \

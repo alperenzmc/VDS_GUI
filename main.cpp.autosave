@@ -61,11 +61,7 @@ int main(int argc, char *argv[])
 
 
 
-      //   UdpClient m_udp_client;
-      //   m_udp_client.setData(*dataValues);
-
-      //   m_udp_client.sendData();
-
+     // UdpClient m_udp_client; 
 
 
         w.show();
